@@ -1,0 +1,41 @@
+import socket
+from urllib.parse import urlparse
+
+def get_ip_from_url(url):
+    try:
+        parsed_url = urlparse(url)
+        hostname = parsed_url.netloc if parsed_url.netloc else parsed_url.path
+        ip = socket.gethostbyname(hostname)
+        return ip
+    except socket.gaierror:
+        print("Error resolving hostname.")
+        return None
+
+def scan_ports(target_ip, start_port=1, end_port=1024):
+    print(f"\nScanning {target_ip} from port {start_port} to {end_port}...\n")
+    open_ports = []
+    for port in range(start_port, end_port + 1):
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.settimeout(0.5)
+                result = s.connect_ex((target_ip, port))
+                if result == 0:
+                    print(f"[+] Port {port} is open")
+                    open_ports.append(port)
+        except KeyboardInterrupt:
+            print("\nScan interrupted.")
+            break
+        except Exception as e:
+            print(f"Error scanning port {port}: {e}")
+    return open_ports
+
+def main():
+    url = input("Enter the website URL (e.g., https://example.com): ")
+    ip = get_ip_from_url(url)
+    if ip:
+        scan_ports(ip)
+    else:
+        print("Failed to resolve the IP. Exiting.")
+
+if __name__ == "__main__":
+    main()
