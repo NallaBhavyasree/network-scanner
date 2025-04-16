@@ -1,3 +1,14 @@
+Create the folder and files locally:
 mkdir port-scanner
 cd port-scanner
 # create and open the files or paste the code
+
+
+Initialize and push:
+git init
+git add .
+git commit -m "Initial commit - added port scanner script"
+git remote add origin https://github.com/YOUR-USERNAME/port-scanner.git
+git branch -M main
+git push -u origin main
+
