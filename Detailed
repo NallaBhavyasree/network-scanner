@@ -1,0 +1,103 @@
+Absolutely! Here’s a **detailed, human-readable documentation** of your code that describes what it does, how it works, and how each part functions — perfect for adding to GitHub or sharing with others.
+
+---
+
+# 🔍 Python Port Scanner – Detailed Documentation
+
+This Python script is a simple command-line tool that allows users to **scan a target website or IP address for open ports**. It's ideal for beginners learning about network programming or cybersecurity fundamentals.
+
+---
+
+## 🧠 What Does This Script Do?
+
+1. **Takes a URL from the user.**  
+2. **Resolves the domain name to its IP address.**  
+3. **Scans a range of ports (default: 1–1024)** on that IP address to check which ports are open.  
+4. **Prints out the open ports** found during the scan.
+
+---
+
+## 🔧 How the Script Works (Step-by-Step)
+
+### 1. Importing Required Libraries
+```python
+import socket
+from urllib.parse import urlparse
+```
+- `socket`: Used to perform networking operations (like resolving IP addresses and checking ports).
+- `urlparse`: Breaks down the user-entered URL to extract the domain name.
+
+---
+
+### 2. `get_ip_from_url(url)`
+This function takes a website URL and extracts the domain name to resolve it into an IP address.
+
+#### Example:
+Input: `https://example.com`  
+Output: `93.184.216.34` (or whatever IP the DNS resolves to)
+
+**How it works:**
+- It uses `urlparse()` to separate the domain from the URL.
+- Uses `socket.gethostbyname()` to translate the domain name to an IP address.
+- If the domain is invalid or cannot be resolved, it prints an error and returns `None`.
+
+---
+
+### 3. `scan_ports(target_ip, start_port=1, end_port=1024)`
+This function scans the specified IP address for open ports within a given range (default: ports 1 through 1024).
+
+**How it works:**
+- It loops through each port in the range.
+- For each port, it tries to connect using a socket with a short timeout.
+- If the connection is successful (i.e., returns `0`), the port is marked as open and printed to the screen.
+- If the scan is interrupted (`Ctrl+C`), it exits gracefully.
+
+---
+
+### 4. `main()`
+This is the entry point of the script.
+
+**It does the following:**
+1. Prompts the user to enter a URL.
+2. Calls `get_ip_from_url()` to resolve the IP address.
+3. If successful, calls `scan_ports()` to scan for open ports.
+4. If it can't resolve the IP, it exits with an error message.
+
+---
+
+## 💻 Example Usage
+
+```bash
+$ python3 scanner.py
+Enter the website URL (e.g., https://example.com): https://google.com
+
+Scanning 142.250.190.78 from port 1 to 1024...
+
+[+] Port 80 is open
+[+] Port 443 is open
+...
+```
+
+---
+
+## ⚠️ Warnings & Ethics
+
+- Only scan IP addresses or websites **you own or have permission to test**.
+- Unauthorized scanning is illegal in many jurisdictions.
+
+---
+
+## ✅ Summary
+
+This script gives you:
+- Basic DNS resolution (domain to IP).
+- A simple way to test which ports are open on a host.
+- A great starting point for building more advanced network tools.
+
+---
+
+If you’d like, I can also:
+- Convert this into a `.md` file for your GitHub repo.
+- Add features like multithreading, progress bars, logging, or custom port ranges.
+
+Let me know how you'd like to extend it!
